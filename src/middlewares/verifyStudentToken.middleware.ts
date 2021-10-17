@@ -13,7 +13,6 @@ export default async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    console.log(req.headers.token);
     if (!req.headers.token) throw Error('Bad token');
     const payload = jwt.verify(
       req.headers.token as string,
