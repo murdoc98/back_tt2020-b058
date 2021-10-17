@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 
 import studentRoutes from 'routes/students/index.route';
+import teacherRoutes from 'routes/teachers/index.route';
 
 const router = Router();
 
@@ -10,6 +11,7 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.use('/students', studentRoutes);
+router.use('/teachers', teacherRoutes);
 
 // Catch non implemented routes
 router.all('*', (req: Request, res: Response) => {

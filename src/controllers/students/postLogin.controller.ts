@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-import Employee from 'models/Student.model';
+import Student from 'models/Student.model';
 import logger from 'logger';
 
 dotenv.config();
@@ -13,7 +13,7 @@ export default async (req: Request, res: Response): Promise<void> => {
   try {
     if (!req.body || !req.body.email || !req.body.password)
       throw Error('Faltan campos');
-    const query = await getRepository(Employee)
+    const query = await getRepository(Student)
       .createQueryBuilder('user')
       .where('user.email = :email', { email: req.body.email })
       .getOne();
