@@ -1,7 +1,8 @@
 import { IsEmail, IsOptional, IsString, IsUUID, Length, validateOrReject } from "class-validator";
-import { BaseEntity, BeforeInsert, Column, Entity, PrimaryColumn, Unique } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Unique } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import Enrollment from "models/Enrollment.model";
 
 interface InewStudent {
   name: string;
@@ -40,6 +41,9 @@ export default class Student extends BaseEntity {
   @Column({ type: 'varchar', length: 100, nullable: true })
   @IsOptional()
   password?: string;
+
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
+  enrollments?: Enrollment[];
 
   public constructor(params?: InewStudent) {
     super();

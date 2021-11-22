@@ -8,7 +8,10 @@ import logger from 'logger';
 
 export default async(req:Request, res:Response) => {
   try {
-    const group = new Group(req.body);
+    const group = new Group({
+      name: req.body.name,
+      teacherId: req.user.id
+    });
     await group.save()
       .then(() => {
         res.status(200).json({

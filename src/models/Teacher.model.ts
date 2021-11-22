@@ -1,7 +1,9 @@
 import { IsEmail, IsOptional, IsString, IsUUID, Length, validateOrReject } from "class-validator";
-import { BaseEntity, BeforeInsert, Column, Entity, PrimaryColumn, Unique } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Unique } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+
+import Group from "models/Group.model";
 
 interface InewTeacher {
   name: string;
@@ -40,6 +42,9 @@ export default class Teacher extends BaseEntity {
   @Column({ type: 'varchar', length: 100, nullable: true })
   @IsOptional()
   password?: string;
+
+  @OneToMany(() => Group, (group) => group.teacher)
+  groups?: Group[];
 
   public constructor(params?: InewTeacher) {
     super();
