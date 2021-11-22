@@ -1,0 +1,90 @@
+tags:
+  name: Estudiantes - Autenticacion
+  description: En este modulo se realiza todo lo referente a la gestion de las cuentas de tipo estudiante.
+paths:
+  /students/auth/login:
+    post:
+      summary: Autentica a un estudiante dentro de la plataforma
+      description: Inicio de sesion del sistema, se obtiene el token de usuario para futuras peticiones dentro del sistema.
+      tags: [Estudiantes - Autenticacion]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: oscarmartinez1998lol@gmail.com
+                password:
+                  type: string
+                  example: thisIsAtest98!
+      responses:
+        '200':
+          description: El usuario fue autenticado exitosamente
+          headers:
+            token:
+              description: Token de autenticacion del usuario
+              type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Inicio exitoso
+                  name:
+                    type: string
+                    example: John Doe
+                  role:
+                    type: string
+                    example: Desarrollador
+        '404':
+          description: Email o contraseña incorrectos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Email o contraseña incorrectos
+  /students/auth/profile:
+    get:
+      summary: Muestra el perfil del estudiante autenticado
+      description: Obtiene los datos relacionados al usuario autenticado
+      tags: [Estudiantes - Autenticacion]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          # TODO Definir el tipo de salida para este endpoint
+          description: Muestra los datos del estudiante autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Inicio exitoso
+                  name:
+                    type: string
+                    example: John Doe
+                  role:
+                    type: string
+                    example: Desarrollador
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto

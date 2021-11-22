@@ -9,17 +9,17 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'HCS - Enterpise API',
+      title: 'TT2020-B058 API',
       version: '0.1.0',
       description:
-        'Api creada para administrar la infresctructura de los endpoints disponibles dentro de HCS',
+        'Api desarrollada y documentada para el TT2020-B058',
       license: {
         name: 'MIT',
         url: 'https://spdx.org/licenses/MIT.html'
       },
       contact: {
-        name: 'Corporativo de seguridad HCS',
-        url: 'https://www.seguridadhcs.com/'
+        name: 'Escuela superior de computo',
+        url: 'https://google.com'
       }
     },
     servers: [
@@ -27,10 +27,6 @@ const options = {
         url: 'http://localhost:1025/api',
         description: 'Development server'
       },
-      {
-        url: 'https://hcseagle.com/api',
-        description: 'Production server'
-      }
     ]
   },
   apis: ['./src/docs/*.yml']

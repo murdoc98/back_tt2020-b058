@@ -11,15 +11,13 @@ dotenv.config();
 
 export default async (req: Request, res: Response): Promise<void> => {
   try {
-    if (!req.body || !req.body.email || !req.body.password)
-      throw Error('Faltan campos');
     const query = await getRepository(Student)
       .createQueryBuilder('user')
       .where('user.email = :email', { email: req.body.email })
       .getOne();
     if (query == undefined || !compare(req.body.password, query.password))
       res.status(404).json({
-        server: 'Usuario no encontrado'
+        server: 'Email o contraseña incorrectas'
       });
     else {
       const token = jwt.sign(
@@ -45,16 +43,10 @@ export default async (req: Request, res: Response): Promise<void> => {
     }
   } catch (err) {
     if (err instanceof Error) {
-      if (err.message == 'Bad entry')
-        res.status(501).json({
-          server: err.message
-        });
-      else {
-        logger.error(err);
-        res.status(500).json({
-          server: 'Error interno en el servidor'
-        });
-      }
+      logger.error(err);
+      res.status(500).json({
+        server: 'Error interno en el servidor'
+      });
     }
   }
 };
