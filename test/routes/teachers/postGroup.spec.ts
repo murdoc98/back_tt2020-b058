@@ -1,13 +1,18 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
 import createServer from '../../../src/server';
+import getToken from '../../helpers/getTeacherToken.helper';
 import dbConnection from '../../../src/dbConnection';
 import { expect } from 'chai';
 
 const app = createServer();
 
 describe('POST /api/teachers/groups - Crear un grupo', () => {
-  before(async () => await dbConnection());
+  let token: string;
+  before(async () => {
+    await dbConnection();
+    token = await getToken();
+  });
   after(async () => await getConnection().close());
   it('200 - Grupo creado', (done) => {
     request(app)
@@ -15,6 +20,7 @@ describe('POST /api/teachers/groups - Crear un grupo', () => {
       .send({
         name: '2CV9'
       })
+      .set('token', token)
       .expect('Content-type', /json/)
       .expect(200)
       .end((err, res) => {
@@ -26,11 +32,12 @@ describe('POST /api/teachers/groups - Crear un grupo', () => {
   it('400 - Faltan campos', (done) => {
     request(app)
       .post('/api/teachers/groups')
+      .set('token', token)
       .expect('Content-type', /json/)
-      .expect(404)
+      .expect(400)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body.server).to.equal('Usuario no encontrado');
+        expect(res.body.server).to.equal('Error en el input');
         done();
       });
   });

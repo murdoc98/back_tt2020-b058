@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import postLogin from 'controllers/students/postLogin.controller';
-import getProfile from 'controllers/students/getProfile.controller';
+import getProfile from 'controllers/getProfile.controller';
 import verifyStudentToken from 'middlewares/verifyStudentToken.middleware';
 
 const router = Router();
