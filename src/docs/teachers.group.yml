@@ -1,0 +1,85 @@
+tags:
+  name: Profesores - Grupos
+  description: En este modulo se realiza todo lo referente a la gestion de los grupos asociados a un profesor
+paths:
+  /teachers/groups:
+    post:
+      summary: Registra un nuevo grupo dentro de la plataforma
+      description: Registra un nuevo grupo dentro del sistema porporcionando el nombre de identificacion del grupo
+      tags: [Profesores - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 3CV11
+      responses:
+        '200':
+          description: Grupo creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: grupo creado
+                  group:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                        exmaple: 3CV11
+                      id:
+                        type: string
+                        example: 76112503-1036-42af-95f5-2f0f9f00995e
+        '400':
+          description: Hay errores u omisiones en el input, para mas informacion revisar el response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Error en el input
+                  errores:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: test
+                        property:
+                          type: string
+                          example: field
+                        children:
+                          type: array
+                          items:
+                            type: string
+                            example: test
+                        contraints:
+                          type: object
+                          properties:
+                            isString:
+                              type: string
+                              example: name must be a string
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
