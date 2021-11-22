@@ -37,7 +37,7 @@ describe('POST /api/teachers/auth/login - Ruta de autenticacion de profesores', 
       .end((err, res) => {
         if (err) return done(err);
         expect(res.headers.token).to.undefined;
-        expect(res.body.server).to.equal('Usuario no encontrado');
+        expect(res.body.server).to.equal('Email o contraseña incorrectas');
         done();
       });
   });
@@ -53,7 +53,7 @@ describe('POST /api/teachers/auth/login - Ruta de autenticacion de profesores', 
       .end((err, res) => {
         if (err) return done(err);
         expect(res.headers.token).to.undefined;
-        expect(res.body.server).to.equal('Usuario no encontrado');
+        expect(res.body.server).to.equal('Email o contraseña incorrectas');
         done();
       });
   });
@@ -69,7 +69,7 @@ describe('POST /api/teachers/auth/login - Ruta de autenticacion de profesores', 
       .end((err, res) => {
         if (err) return done(err);
         expect(res.headers.token).to.undefined;
-        expect(res.body.server).to.equal('Usuario no encontrado');
+        expect(res.body.server).to.equal('Email o contraseña incorrectas');
         done();
       });
   });
