@@ -83,3 +83,42 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+    get:
+      summary: Obtener grupos
+      description: Obtiene todos los grupos asociados al profesor autenticado
+      tags: [Profesores - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Muestra los grupos generados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: grupo creado
+                  group:
+                    type: object
+                    properties:
+                      name: 
+                        type: string
+                        exmaple: 3CV11
+                      id:
+                        type: string
+                        example: 76112503-1036-42af-95f5-2f0f9f00995e
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto

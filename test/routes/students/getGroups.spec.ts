@@ -14,7 +14,7 @@ describe('GET /api/teachers/groups - Obtener grupos asociados al profesor', () =
     token = await getToken();
   });
   after(async () => await getConnection().close());
-  it('200 - Muestra los grupos asociados al profesor autenticado', (done) => {
+  it('200 - Grupo creado', (done) => {
     request(app)
       .get('/api/teachers/groups')
       .set('token', token)

@@ -3,6 +3,7 @@ import { BaseEntity, BeforeInsert, Column, Entity, getRepository, JoinColumn, Ma
 import { v4 as uuidv4 } from 'uuid';
 
 import Student from "models/Student.model";
+import Group from 'models/Group.model';
 
 interface InewGroup {
   name: string;
@@ -22,6 +23,12 @@ export default class Enrollment extends BaseEntity {
   @ManyToOne(() => Student, (student) => student.enrollments)
   @JoinColumn({ name: 'studentId' })
   student?: Student;
+
+  @Column({ nullable: false, select: false })
+  groupId?: string;
+  @ManyToOne(() => Group, (group) => group.enrollments)
+  @JoinColumn({ name: 'groupId' })
+  group?: Group;
 
   public constructor(params?: InewGroup) {
     super();

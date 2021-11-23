@@ -4,6 +4,7 @@ import path from 'path';
 
 import Teacher from 'models/Teacher.model';
 import Student from 'models/Student.model';
+import Group from 'models/Group.model';
 import logger from 'logger';
 
 // Creating students
@@ -45,6 +46,11 @@ const teacher2 = new Teacher({
 });
 teacher2.setPassword('thisIsAtest98!');
 
+const group1 = new Group({
+  name: '5to A',
+  teacherId: teacher1
+});
+
 const seed = async () => {
   try {
     if (!fs.existsSync(path.resolve(__dirname, '../../files'))) {
@@ -59,6 +65,8 @@ const seed = async () => {
     await teacher1.save();
     await teacher2.save();
     logger.info('Teachers created');
+    await group1.save();
+    logger.info('Groups created');
     return;
   } catch(err) {
     logger.error(err);
