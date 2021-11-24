@@ -1,6 +1,6 @@
 import { IsString, IsUUID, Length, validateOrReject } from "class-validator";
 import { BaseEntity, BeforeInsert, Column, Entity, getRepository, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, Unique } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, version as uuidVersion, validate as uuidValidate } from 'uuid';
 
 import Teacher from "models/Teacher.model";
 import Enrollment from "models/Enrollment.model";
@@ -37,13 +37,46 @@ export default class Group extends BaseEntity {
       params.teacherId instanceof Teacher ? this.teacher = params.teacherId : this.teacherId = params.teacherId;
     }
   };
-  public async getGroups(teacherId: string) {
+  public async getGroupsByTeacher(teacherId: string) {
     const response = await getRepository(Group)
       .createQueryBuilder('group')
       .leftJoinAndSelect('group.enrollments', 'enrollments')
       .where('group.teacher = :teacherId', {teacherId})
       .getMany();
-    // TODO aplicar filtro inscritos
+    // TODO aplicar filtro de profesores
+    return response;
+  }
+  public async getGroupsByStudent(studentId: string) {
+    const response = await getRepository(Group)
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.enrollments', 'enrollments')
+      .leftJoinAndSelect('enrollments.student', 'student')
+      .getMany();
+    return response;
+  }
+  public async getGroupByTeacher(teacherId: string, groupId: string) {
+    if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
+      throw Error('No group');
+    const response = await getRepository(Group)
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.enrollments', 'enrollments')
+      .leftJoinAndSelect('enrollments.student', 'student')
+      .where('group.teacher = :teacherId', { teacherId })
+      .andWhere('group.id = :groupId', { groupId })
+      .getOne();
+    if (!response) throw Error('No group');
+    return response;
+  }
+  public async getGroup(groupId: string) {
+    if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
+      throw Error('No group');
+    const response = await getRepository(Group)
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.enrollments', 'enrollments')
+      .leftJoinAndSelect('enrollments.student', 'student')
+      .andWhere('group.id = :groupId', { groupId })
+      .getOne();
+    if (!response) throw Error('No group');
     return response;
   }
   @BeforeInsert()

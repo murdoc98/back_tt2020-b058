@@ -1,17 +1,16 @@
 import request from 'supertest';
-import { getConnection, GroupOptions } from 'typeorm';
+import { getConnection } from 'typeorm';
 import createServer from '../../../src/server';
+import getToken from '../../helpers/getStudentToken.helper';
+import getGroup from '../../helpers/getGroup.helper';
 import dbConnection from '../../../src/dbConnection';
 import { expect } from 'chai';
-
-import getToken from '../../helpers/getTeacherToken.helper';
-import getGroup from '../../helpers/getGroup.helper';
 
 import Group from '../../../src/models/Group.model';
 
 const app = createServer();
 
-describe('GET /api/teachers/groups/<groupId> - Obtiene un grupo en especifico', () => {
+describe('POST /api/students/groups/<groupId>/enroll - Solicita la inscripcion a un grupo', () => {
   let token: string;
   let group: Group;
   before(async () => {
@@ -20,9 +19,9 @@ describe('GET /api/teachers/groups/<groupId> - Obtiene un grupo en especifico', 
     group = await getGroup();
   });
   after(async () => await getConnection().close());
-  it('200 - Muestra el grupo especificado', (done) => {
+  it('200 - El alumno ha solicitado la inscipcion a un grupo', (done) => {
     request(app)
-      .get(`/api/teachers/groups/${group.id}`)
+      .post(`/api/students/groups/${group.id}/enroll`)
       .set('token', token)
       .expect('Content-type', /json/)
       .expect(200)
@@ -34,7 +33,7 @@ describe('GET /api/teachers/groups/<groupId> - Obtiene un grupo en especifico', 
   });
   it('404 - El grupo no ha sido encontrado', (done) => {
     request(app)
-      .get('/api/teachers/groups/thisIsATest')
+      .post('/api/students/groups/thisIsATest/enroll')
       .set('token', token)
       .expect('Content-type', /json/)
       .expect(404)
@@ -46,7 +45,7 @@ describe('GET /api/teachers/groups/<groupId> - Obtiene un grupo en especifico', 
   });
   it('405 - Token corrupto', (done) => {
     request(app)
-      .get('/api/teachers/groups')
+      .post(`/api/students/groups/${group.id}/enroll`)
       .expect('Content-type', /json/)
       .expect(405)
       .end((err, res) => {

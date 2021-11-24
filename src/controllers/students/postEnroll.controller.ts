@@ -3,11 +3,11 @@ import logger from 'logger';
 
 import Group from 'models/Group.model';
 
-
 export default async(req:Request, res:Response) => {
   try {
     const group = new Group();
-    const response = await group.getGroupsByTeacher(req.user.id);
+    const response = await group.getGroupsByStudent(req.params.groupId);
+    console.log(response);
     res.status(200).json(response);
   } catch(err) {
     if(err instanceof Error) {
