@@ -6,6 +6,7 @@ import Teacher from 'models/Teacher.model';
 import Student from 'models/Student.model';
 import Group from 'models/Group.model';
 import logger from 'logger';
+import Enrollment from 'models/Enrollment.model';
 
 // Creating students
 const student1 = new Student({
@@ -50,6 +51,16 @@ const group1 = new Group({
   name: '5to A',
   teacherId: teacher1
 });
+const enroll1 = new Enrollment({
+  student: student1,
+  group: group1
+});
+const enroll2 = new Enrollment({
+  student: student2,
+  group: group1
+});
+enroll2.status = true;
+
 
 const seed = async () => {
   try {
@@ -67,6 +78,9 @@ const seed = async () => {
     logger.info('Teachers created');
     await group1.save();
     logger.info('Groups created');
+    await enroll1.save();
+    await enroll2.save();
+    logger.info('Enrolls created');
     return;
   } catch(err) {
     logger.error(err);

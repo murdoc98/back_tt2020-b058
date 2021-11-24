@@ -6,7 +6,7 @@ import Group from 'models/Group.model';
 export default async(req:Request, res:Response) => {
   try {
     const group = new Group();
-    const response = await group.getGroupsByStudent(req.params.groupId);
+    const response = await group.getGroup(req.params.groupId);
     console.log(response);
     res.status(200).json(response);
   } catch(err) {

@@ -5,8 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import Student from "models/Student.model";
 import Group from 'models/Group.model';
 
-interface InewGroup {
-  name: string;
+interface InewEnroll {
+  student: string | Student;
+  group: string | Group;
 }
 
 @Entity({ name: 'enrollments' })
@@ -30,8 +31,13 @@ export default class Enrollment extends BaseEntity {
   @JoinColumn({ name: 'groupId' })
   group?: Group;
 
-  public constructor(params?: InewGroup) {
+  public constructor(params?: InewEnroll) {
     super();
+    if(params) {
+      this.status = false;
+      params.student instanceof Student ? this.student = params.student : this.studentId = params.student;
+      params.group instanceof Group ? this.group = params.group : this.groupId = params.group;
+    }
   };
   @BeforeInsert()
   async validateModel(): Promise<void> {
