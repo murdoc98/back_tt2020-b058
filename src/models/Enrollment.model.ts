@@ -11,6 +11,7 @@ interface InewEnroll {
 }
 
 @Entity({ name: 'enrollments' })
+@Unique(['studentId', 'groupId'])
 export default class Enrollment extends BaseEntity {
   @PrimaryColumn({ type: 'uuid', unique: true, nullable: false })
   @IsUUID()
@@ -39,6 +40,9 @@ export default class Enrollment extends BaseEntity {
       params.group instanceof Group ? this.group = params.group : this.groupId = params.group;
     }
   };
+  public async getEnrollment(studentId: string, groupId: string) {
+    
+  }
   @BeforeInsert()
   async validateModel(): Promise<void> {
     this.id = uuidv4();

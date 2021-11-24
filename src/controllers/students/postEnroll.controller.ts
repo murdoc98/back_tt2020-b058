@@ -1,14 +1,34 @@
 import { Request, Response } from 'express';
 import logger from 'logger';
 
-import Group from 'models/Group.model';
+import Enrollment from 'models/Enrollment.model';
 
 export default async(req:Request, res:Response) => {
   try {
-    const group = new Group();
-    const response = await group.getGroup(req.params.groupId);
-    console.log(response);
-    res.status(200).json(response);
+    const enroll = new Enrollment({
+      student: req.user.id,
+      group: req.params.groupId
+    });
+    enroll.save()
+      .then(() => {
+        res.status(200).json({
+          server: 'Solicitud enviada'
+        });
+      })
+      .catch((err) => {
+        if(err.message.includes('duplicate key value violates unique constraint')) {
+          res.status(304).json();
+        }
+        else if(err.message.includes('invalid input syntax for type uuid') ||
+          err.message.includes('insert or update on table "enrollments" violates foreign key constraint'))
+          res.status(404).json({
+            server: 'Grupo no encontrado'
+          });
+        else 
+          res.status(500).json({
+            server: 'Error interno en la base de datos'
+          });
+      });
   } catch(err) {
     if(err instanceof Error) {
       if (err.message == 'Bad entry')

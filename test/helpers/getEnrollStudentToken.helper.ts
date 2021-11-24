@@ -5,7 +5,7 @@ const app = createServer();
 
 export default async (): Promise<string> => {
   const loginData = {
-    email: 'doe@example.com',
+    email: 'john@example.com',
     password: 'thisIsAtest98!'
   };
   const response = await request(app)
