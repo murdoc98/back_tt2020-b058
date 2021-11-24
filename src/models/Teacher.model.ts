@@ -43,6 +43,9 @@ export default class Teacher extends BaseEntity {
   @IsOptional()
   password?: string;
 
+  @Column({ type: 'bigint', nullable: true })
+  iat?: number;
+
   @OneToMany(() => Group, (group) => group.teacher)
   groups?: Group[];
 
