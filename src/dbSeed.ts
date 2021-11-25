@@ -5,8 +5,10 @@ import path from 'path';
 import Teacher from 'models/Teacher.model';
 import Student from 'models/Student.model';
 import Group from 'models/Group.model';
-import logger from 'logger';
 import Enrollment from 'models/Enrollment.model';
+import Question from 'models/Question.schema';
+
+import logger from 'logger';
 
 // Creating students
 const student1 = new Student({
@@ -61,6 +63,13 @@ const enroll2 = new Enrollment({
 });
 enroll2.status = true;
 
+const question1 = new Question({
+  statement: 'Esto es una prueba',
+  general_topic: 'Numero, algebra y variacion',
+  topic: 'Numeros',
+  description: 'Los números pueden ser decimales o fracciones',
+  image: null
+});
 
 const seed = async () => {
   try {
@@ -81,6 +90,8 @@ const seed = async () => {
     await enroll1.save();
     await enroll2.save();
     logger.info('Enrolls created');
+    await question1.save();
+    logger.info('Questions created');
     return;
   } catch(err) {
     logger.error(err);
