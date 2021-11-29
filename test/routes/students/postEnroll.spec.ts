@@ -1,10 +1,11 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
+import mongoose from 'mongoose';
 import createServer from '../../../src/server';
 import getToken from '../../helpers/getStudentToken.helper';
 import getToken2 from '../../helpers/getEnrollStudentToken.helper';
 import getGroup from '../../helpers/getGroup.helper';
-import dbConnection from '../../../src/dbConnection';
+import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
 import Group from '../../../src/models/Group.model';
@@ -16,7 +17,7 @@ describe('POST /api/students/groups/<groupId>/enroll - Solicita la inscripcion a
   let token2: string;
   let group: Group;
   before(async () => {
-    await dbConnection();
+    await sqlConnection();
     token1 = await getToken();
     token2 = await getToken2();
     group = await getGroup();
@@ -30,7 +31,7 @@ describe('POST /api/students/groups/<groupId>/enroll - Solicita la inscripcion a
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body.server).to.equal('Solicitud enviada');
+        expect(res.body.server).to.equal('Solicitud de inscripcion enviada al grupo');
         done();
       });
   });

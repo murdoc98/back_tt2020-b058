@@ -1,13 +1,13 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
 import createServer from '../../../src/server';
-import dbConnection from '../../../src/dbConnection';
+import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
 const app = createServer();
 
 describe('POST /api/students/auth/login - Ruta de autenticacion de estudiantes', () => {
-  before(async () => await dbConnection());
+  before(async () => await sqlConnection());
   after(async () => await getConnection().close());
   it('200 - Credenciales correctas', (done) => {
     request(app)

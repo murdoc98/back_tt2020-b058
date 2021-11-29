@@ -2,7 +2,7 @@ import request from 'supertest';
 import { getConnection } from 'typeorm';
 import createServer from '../../../src/server';
 import getToken from '../../helpers/getTeacherToken.helper';
-import dbConnection from '../../../src/dbConnection';
+import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
 const app = createServer();
@@ -10,7 +10,7 @@ const app = createServer();
 describe('GET /api/teachers/groups - Obtener grupos asociados al profesor', () => {
   let token: string;
   before(async () => {
-    await dbConnection();
+    await sqlConnection();
     token = await getToken();
   });
   after(async () => await getConnection().close());

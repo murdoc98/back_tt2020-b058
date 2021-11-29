@@ -42,3 +42,50 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /students/groups/{groupId}/enroll:
+    post:
+      summary: Inscripcion a un grupo
+      description: Solicita la inscripcion a un grupo especifico a travez del Id del grupo
+      tags: [Estudiantes - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: El alumno ha solicitado la inscripcion al grupo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Solicitud de inscripcion enviada al grupo
+        '304':
+          description: El alumno ya ha solicitado la inscripcion al grupo y por lo tanto no recibe una respuesta en el body
+        '404':
+          description: El grupo no fue encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Grupo no encontrado
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto

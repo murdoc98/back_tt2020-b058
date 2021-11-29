@@ -37,9 +37,6 @@ paths:
                   name:
                     type: string
                     example: John Doe
-                  role:
-                    type: string
-                    example: Desarrollador
         '404':
           description: Email o contraseña incorrectos
           content:
@@ -78,6 +75,37 @@ paths:
                   role:
                     type: string
                     example: Desarrollador
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
+  /teachers/auth/logout:
+    put:
+      summary: Cierre de sesion en el back
+      description: Avisa al servidor sobre el cierre de sesion, invalidando el token actual del usuario
+      tags: [Profesores - Autenticacion]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: La sesion fue finalizada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Sesion finalizada
         '405':
           description: Error de usuario, para mas informacion consultar la respuesta del servidor
           content:

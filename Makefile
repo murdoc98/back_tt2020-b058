@@ -1,18 +1,17 @@
 exec_test:
-	docker-compose -f docker-compose.test.yml down
+	docker-compose down
 	sudo rm -rf ../sql
-	sudo rm -rf ../nsql
+	sudo rm -rf ../nosql
 	sudo rm -rf ../files
-	docker-compose -f docker-compose.test.yml up -d
+	docker-compose up -d
 	npm run seed
 	npm test
-	docker-compose -f docker-compose.test.yml down
+	docker-compose down
 exec_clear:
-	sudo rm -rf ../test_db
 	sudo rm -rf ../sql
-	sudo rm -rf ../nsql
+	sudo rm -rf ../nosql
+	sudo rm -rf ../files
 	rm -rf dist
-	rm -rf ../files
 	docker-compose up -d
 	npm run seed
 	docker-compose down

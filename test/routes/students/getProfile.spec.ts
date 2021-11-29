@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
 import createServer from '../../../src/server';
-import dbConnection from '../../../src/dbConnection';
+import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
 import getToken from '../../helpers/getStudentToken.helper';
@@ -11,7 +11,7 @@ const app = createServer();
 describe('GET /api/students/auth/profile - Ruta para obtener el perfil del estudiante', () => {
   let token: string;
   before(async () => {
-    await dbConnection();
+    await sqlConnection();
     token = await getToken();
   });
   after(async () => await getConnection().close());

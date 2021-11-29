@@ -1,15 +1,14 @@
 import logger from 'logger';
 import createServer from 'server';
-import dbConnection from 'dbConnection';
-import Question from 'models/Question.schema';
+import sqlConnection from 'sqlConnection';
+import nosqlConnection from 'nosqlConnection';
 
 const startServer = async () => {
   const app = createServer();
-  await dbConnection();
-  const books = await Question.find({});
+  await sqlConnection();
+  await nosqlConnection();
   app.listen(app.get('PORT'), () => {
-    console.log(books);
-    logger.info(`Server running on port ${app.get('PORT')}`);
+    logger.warn(`Server running on port ${app.get('PORT')}`);
   });
 };
 

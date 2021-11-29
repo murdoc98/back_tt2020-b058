@@ -1,19 +1,9 @@
 import { createConnection } from 'typeorm';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import logger from 'logger';
 
 export default async (): Promise<void> => {
   dotenv.config();
-  const nsqlURI = `mongodb://localhost:${process.env.NDB_PORT}/questions`;
-  mongoose.connect(nsqlURI);
-  const db = mongoose.connection
-  db.on("error", (err) => {
-    logger.error(err);
-  });
-  db.on('connected', (err, res) => {
-    logger.info('No sql database connected');
-  });
   await createConnection({
     type: 'postgres',
     host: process.env.DB_HOST,

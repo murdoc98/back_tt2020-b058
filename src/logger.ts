@@ -45,7 +45,7 @@ const errorStackFormat = winston.format((info) => {
   return info;
 });
 const logger = winston.createLogger({
-  level: 'debug',
+  level: 'warn',
   levels: logLevels,
   format: winston.format.combine(errorStackFormat(), logFormat),
   transports: logTransports

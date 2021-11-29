@@ -4,7 +4,7 @@ tags:
 paths:
   /teachers/groups:
     post:
-      summary: Registra un nuevo grupo dentro de la plataforma
+      summary: Registra un nuevo grupo
       description: Registra un nuevo grupo dentro del sistema porporcionando el nombre de identificacion del grupo
       tags: [Profesores - Grupos]
       parameters:
@@ -122,3 +122,13 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /api/teachers/groups/{groupsId}/{studentId}:
+    put:
+      summary: Modifica el acceso del estudiante al grupo
+      description: Modifica el acceso del estudiante al grupo, siendo FALSE - Sin acceso y TRUE - Con acceso, en caso de tener acceso podra visualizar y realizar las actividades designadas en dicho grupo
+      tags: [Profesores  Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string

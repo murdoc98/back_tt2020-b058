@@ -1,7 +1,8 @@
 import request from 'supertest';
-import { getConnection, GroupOptions } from 'typeorm';
+import { getConnection } from 'typeorm';
+import mongoose from 'mongoose';
 import createServer from '../../../src/server';
-import dbConnection from '../../../src/dbConnection';
+import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
 import getToken from '../../helpers/getTeacherToken.helper';
@@ -15,7 +16,7 @@ describe('GET /api/teachers/groups/<groupId> - Obtiene un grupo en especifico', 
   let token: string;
   let group: Group;
   before(async () => {
-    await dbConnection();
+    await sqlConnection();
     token = await getToken();
     group = await getGroup();
   });

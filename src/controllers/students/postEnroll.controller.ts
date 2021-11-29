@@ -12,7 +12,7 @@ export default async(req:Request, res:Response) => {
     enroll.save()
       .then(() => {
         res.status(200).json({
-          server: 'Solicitud enviada'
+          server: 'Solicitud de inscripcion enviada al grupo'
         });
       })
       .catch((err) => {
