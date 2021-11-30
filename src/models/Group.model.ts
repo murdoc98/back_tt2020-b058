@@ -9,6 +9,13 @@ interface InewGroup {
   name: string;
   teacherId: string | Teacher;
 }
+interface formattedStudent {
+  id: string | undefined;
+  name: string | undefined; 
+  surname: string | undefined; 
+  secondSurname: string | undefined;
+}
+
 
 @Entity({ name: 'groups' })
 export default class Group extends BaseEntity {
@@ -27,7 +34,7 @@ export default class Group extends BaseEntity {
   @JoinColumn({ name: 'teacherId' })
   teacher?: Teacher;
 
-  @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.group)
   enrollments?: Enrollment[];
 
   public constructor(params?: InewGroup) {
@@ -42,15 +49,22 @@ export default class Group extends BaseEntity {
       .createQueryBuilder('group')
       .leftJoinAndSelect('group.enrollments', 'enrollments')
       .where('group.teacher = :teacherId', {teacherId})
-      .getMany();
-    // TODO aplicar filtro de profesores
+      .getMany() as any;
+    response.forEach((group: { enrollments: any[]; }) => {
+      const enrolls = group.enrollments?.reduce((i, current) => {
+        return current ? i + 1 : i;
+      }, 0);
+      group.enrollments = enrolls;
+    });
     return response;
   }
   public async getGroupsByStudent(studentId: string) {
     const response = await getRepository(Group)
       .createQueryBuilder('group')
-      .leftJoinAndSelect('group.enrollments', 'enrollments')
-      .leftJoinAndSelect('enrollments.student', 'student')
+      .leftJoin('group.enrollments', 'enrollments')
+      .leftJoin('enrollments.student', 'student')
+      .where('student.id = :studentId', { studentId })
+      .andWhere('enrollments.status = TRUE')
       .getMany();
     return response;
   }
@@ -65,7 +79,26 @@ export default class Group extends BaseEntity {
       .andWhere('group.id = :groupId', { groupId })
       .getOne();
     if (!response) throw Error('No group');
-    return response;
+    const enrolled: formattedStudent[] = [];
+    const unenrolled: formattedStudent[] = [];
+    response.enrollments?.forEach(student => {
+      const formatted = {
+        id: student.id,
+        name: student.student?.name,
+        surname: student.student?.surname,
+        secondSurname: student.student?.secondSurname
+      }
+      if(student.status) enrolled.push(formatted);
+      else unenrolled.push(formatted);
+    });
+    console.log(enrolled);
+    console.log(unenrolled);
+    return {
+      id: response.id,
+      name: response.name,
+      enrolled,
+      unenrolled
+    };
   }
   public async getGroup(groupId: string) {
     if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))

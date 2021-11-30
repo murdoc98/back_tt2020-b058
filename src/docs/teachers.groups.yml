@@ -98,6 +98,144 @@ paths:
           content:
             application/json:
               schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 76112503-1036-42af-95f5-2f0f9f00995e
+                    name:
+                      type: string
+                      example: 3CV234
+                    enrollments:
+                      type: number
+                      example: 12
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
+  /teachers/groups/{groupId}:
+    get:
+      summary: Obtiene un grupo en especifico
+      description: Obtiene los registros de un grupo asociado a un profesor
+      tags: [Profesores - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: El estatus del alumno ha sido modificado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 76112503-1036-42af-95f5-2f0f9f00995e
+                  name:
+                    type: string
+                    example: 4CV19
+                  enrolled:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: 
+                          type: string
+                          example: 76112503-1036-42af-95f5-2f0f9f00995e
+                        name:
+                          type: string
+                          example: Oscar
+                        surname:
+                          type: string
+                          example: Martinez
+                        secondSurname:
+                          type: string
+                          example: Vazquez
+                  unenrolled:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: 
+                          type: string
+                          example: 76112503-1036-42af-95f5-2f0f9f00995e
+                        name:
+                          type: string
+                          example: Oscar
+                        surname:
+                          type: string
+                          example: Martinez
+                        secondSurname:
+                          type: string
+                          example: Vazquez
+        '404':
+          description: El grupo o el alumno asociado al grupo no fueron encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Grupo no encontrado
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
+  /teachers/groups/{groupId}/{studentId}:
+    put:
+      summary: Modifica el acceso del estudiante al grupo
+      description: Modifica el acceso del estudiante al grupo, siendo FALSE - Sin acceso y TRUE - Con acceso, en caso de tener acceso podra visualizar y realizar las actividades designadas en dicho grupo
+      tags: [Profesores - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        schema:
+          type: string
+      - name: studentId
+        in: path
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: El estatus del alumno ha sido modificado
+          content:
+            application/json:
+              schema:
                 type: object
                 properties:
                   server:
@@ -112,6 +250,16 @@ paths:
                       id:
                         type: string
                         example: 76112503-1036-42af-95f5-2f0f9f00995e
+        '404':
+          description: El grupo o el alumno asociado al grupo no fueron encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Grupo no encontrado
         '405':
           description: Error de usuario, para mas informacion consultar la respuesta del servidor
           content:
@@ -122,13 +270,3 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
-  /api/teachers/groups/{groupsId}/{studentId}:
-    put:
-      summary: Modifica el acceso del estudiante al grupo
-      description: Modifica el acceso del estudiante al grupo, siendo FALSE - Sin acceso y TRUE - Con acceso, en caso de tener acceso podra visualizar y realizar las actividades designadas en dicho grupo
-      tags: [Profesores  Grupos]
-      parameters:
-      - name: token
-        in: header
-        schema:
-          type: string

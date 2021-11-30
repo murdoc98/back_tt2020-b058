@@ -58,11 +58,12 @@ const enroll1 = new Enrollment({
   student: student1,
   group: group1
 });
+enroll1.status = true;
 const enroll2 = new Enrollment({
   student: student2,
   group: group1
 });
-enroll2.status = true;
+//enroll2.status = true;
 
 const question1 = new Question({
   statement: 'Ordena de mayor a menor los siguientes numeros: $1, $2, $3, $4',

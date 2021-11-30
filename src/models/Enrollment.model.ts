@@ -1,6 +1,6 @@
-import { IsString, IsUUID, Length, validateOrReject } from "class-validator";
+import { IsUUID, validateOrReject } from "class-validator";
 import { BaseEntity, BeforeInsert, Column, Entity, getRepository, JoinColumn, ManyToOne, PrimaryColumn, Unique } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, version as uuidVersion, validate as uuidValidate } from 'uuid';
 
 import Student from "models/Student.model";
 import Group from 'models/Group.model';
@@ -26,7 +26,7 @@ export default class Enrollment extends BaseEntity {
   @JoinColumn({ name: 'studentId' })
   student?: Student;
 
-  @Column({ nullable: false, select: false })
+  @Column({ nullable: false })
   groupId?: string;
   @ManyToOne(() => Group, (group) => group.enrollments)
   @JoinColumn({ name: 'groupId' })
@@ -41,7 +41,17 @@ export default class Enrollment extends BaseEntity {
     }
   };
   public async getEnrollment(studentId: string, groupId: string) {
-    
+    if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
+      throw Error('No group');
+    if (!(uuidValidate(studentId) && uuidVersion(studentId) === 4))
+      throw Error('No group');
+    const query = await getRepository(Enrollment)
+      .createQueryBuilder('enrollment')
+      .where('enrollment.studentId = :studentId', { studentId })
+      .andWhere('enrollment.groupId = :groupId', { groupId })
+      .getOne();
+    console.log(query);
+    return;
   }
   @BeforeInsert()
   async validateModel(): Promise<void> {

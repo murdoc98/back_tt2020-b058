@@ -3,7 +3,6 @@ import logger from 'logger';
 
 import Group from 'models/Group.model';
 
-
 export default async(req:Request, res:Response) => {
   try {
     const group = new Group();
