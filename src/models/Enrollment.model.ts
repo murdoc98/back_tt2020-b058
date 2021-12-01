@@ -42,15 +42,20 @@ export default class Enrollment extends BaseEntity {
   };
   public async getEnrollment(studentId: string, groupId: string) {
     if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
-      throw Error('No group');
+      throw Error('No enrollment');
     if (!(uuidValidate(studentId) && uuidVersion(studentId) === 4))
-      throw Error('No group');
+      throw Error('No enrollment');
+    console.log(studentId, groupId);
     const query = await getRepository(Enrollment)
       .createQueryBuilder('enrollment')
-      .where('enrollment.studentId = :studentId', { studentId })
+      .where('enrollment.id = :studentId', { studentId })
       .andWhere('enrollment.groupId = :groupId', { groupId })
       .getOne();
-    console.log(query);
+    if(!query) throw Error('No enrollment');
+    this.id = query.id;
+    this.status = query.status;
+    this.studentId = query.studentId;
+    this.groupId = query.groupId;
     return;
   }
   @BeforeInsert()

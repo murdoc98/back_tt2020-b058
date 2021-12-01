@@ -259,7 +259,7 @@ paths:
                 properties:
                   server:
                     type: string
-                    example: Grupo no encontrado
+                    example: Inscripcion no encontrada
         '405':
           description: Error de usuario, para mas informacion consultar la respuesta del servidor
           content:
