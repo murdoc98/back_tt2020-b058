@@ -9,6 +9,8 @@ const app = createServer();
 
 describe('PUT /api/teachers/groups/<groupId>/accept/<studentId> - Acepta a un alumno', () => {
   let token: string;
+  let groupId: string;
+  let studentId: string;
   before(async () => {
     await sqlConnection();
     token = await getToken();
@@ -16,7 +18,7 @@ describe('PUT /api/teachers/groups/<groupId>/accept/<studentId> - Acepta a un al
   after(async () => await getConnection().close());
   it('200 - Grupo creado', (done) => {
     request(app)
-      .post('/api/teachers/groups')
+      .post(`/api/teachers/groups/${groupId}/${studentId}`)
       .send({
         name: '2CV9'
       })
@@ -31,7 +33,7 @@ describe('PUT /api/teachers/groups/<groupId>/accept/<studentId> - Acepta a un al
   });
   it('400 - Faltan campos', (done) => {
     request(app)
-      .post('/api/teachers/groups')
+      .post(`/api/teachers/groups/${groupId}/${studentId}`)
       .set('token', token)
       .expect('Content-type', /json/)
       .expect(400)
@@ -43,7 +45,7 @@ describe('PUT /api/teachers/groups/<groupId>/accept/<studentId> - Acepta a un al
   });
   it('405 - Token corrupto', (done) => {
     request(app)
-      .post('/api/teachers/groups')
+      .post(`/api/teachers/groups/${groupId}/${studentId}`)
       .send({
         name: '2CV9'
       })

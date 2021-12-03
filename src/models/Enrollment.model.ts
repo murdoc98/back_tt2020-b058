@@ -1,9 +1,10 @@
 import { IsUUID, validateOrReject } from "class-validator";
-import { BaseEntity, BeforeInsert, Column, Entity, getRepository, JoinColumn, ManyToOne, PrimaryColumn, Unique } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, Entity, getRepository, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, Unique } from "typeorm";
 import { v4 as uuidv4, version as uuidVersion, validate as uuidValidate } from 'uuid';
 
 import Student from "models/Student.model";
 import Group from 'models/Group.model';
+import Quiz from "./Quiz.model";
 
 interface InewEnroll {
   student: string | Student;
@@ -32,6 +33,9 @@ export default class Enrollment extends BaseEntity {
   @JoinColumn({ name: 'groupId' })
   group?: Group;
 
+  @OneToMany(() => Quiz, (quiz) => quiz.enrollment)
+  quizzes?: Quiz[];
+
   public constructor(params?: InewEnroll) {
     super();
     if(params) {
@@ -40,15 +44,14 @@ export default class Enrollment extends BaseEntity {
       params.group instanceof Group ? this.group = params.group : this.groupId = params.group;
     }
   };
-  public async getEnrollment(studentId: string, groupId: string) {
+  public async getEnrollment(enrollmentId: string, groupId: string) {
     if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
       throw Error('No enrollment');
-    if (!(uuidValidate(studentId) && uuidVersion(studentId) === 4))
+    if (!(uuidValidate(enrollmentId) && uuidVersion(enrollmentId) === 4))
       throw Error('No enrollment');
-    console.log(studentId, groupId);
     const query = await getRepository(Enrollment)
       .createQueryBuilder('enrollment')
-      .where('enrollment.id = :studentId', { studentId })
+      .where('enrollment.id = :studentId', { enrollmentId })
       .andWhere('enrollment.groupId = :groupId', { groupId })
       .getOne();
     if(!query) throw Error('No enrollment');
@@ -57,6 +60,24 @@ export default class Enrollment extends BaseEntity {
     this.studentId = query.studentId;
     this.groupId = query.groupId;
     return;
+  }
+  public async getEnrollment2(studentId: string, groupId: string) {
+    if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
+      throw Error('No enrollment');
+    if (!(uuidValidate(studentId) && uuidVersion(studentId) === 4))
+      throw Error('No enrollment');
+    const query = await getRepository(Enrollment)
+      .createQueryBuilder('enrollment')
+      .leftJoinAndSelect('enrollment.quizzes', 'quizzes')
+      .where('enrollment.studentId = :studentId', { studentId })
+      .andWhere('enrollment.groupId = :groupId', { groupId })
+      .andWhere('enrollment.status = TRUE')
+      .getOne();
+    this.id = query?.id;
+    this.status = query?.status;
+    this.studentId = query?.studentId;
+    this.groupId = query?.groupId;
+    this.quizzes = query?.quizzes;
   }
   @BeforeInsert()
   async validateModel(): Promise<void> {

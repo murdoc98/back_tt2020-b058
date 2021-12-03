@@ -185,19 +185,19 @@ const seed = async () => {
     }
     await sqlConnection();
     await nosqlConnection();
-    logger.info('Creating seed records');
+    logger.warn('Creating seed records');
     await student1.save();
     await student2.save();
     await student3.save();
-    logger.info('Students created');
+    logger.warn('Students created');
     await teacher1.save();
     await teacher2.save();
-    logger.info('Teachers created');
+    logger.warn('Teachers created');
     await group1.save();
-    logger.info('Groups created');
+    logger.warn('Groups created');
     await enroll1.save();
     await enroll2.save();
-    logger.info('Enrolls created');
+    logger.warn('Enrolls created');
     await question1.save();
     await question2.save();
     await question3.save();
@@ -214,7 +214,7 @@ const seed = async () => {
     await question14.save();
     await question15.save();
     await question16.save();
-    logger.info('Questions created');
+    logger.warn('Questions created');
     process.exit(0);
   } catch(err) {
     logger.error(err);

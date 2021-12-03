@@ -1,22 +1,25 @@
-import { ValidationError } from 'class-validator';
 import { Request, Response } from 'express';
 import logger from 'logger';
 import Enrollment from 'models/Enrollment.model';
+import Quiz from 'models/Quiz.model';
 import removeUndefined from 'helpers/removeUndefined.helper';
+import { ValidationError } from 'class-validator';
 
 export default async(req: Request, res: Response) => {
   try {
     const enrollment = new Enrollment();
-    await enrollment.getEnrollment(req.params.studentId, req.params.groupId);
-    enrollment.status = req.body.status;
-    await enrollment.save()
+    enrollment.getEnrollment2(req.user.id, req.body.group);
+    const quiz = new Quiz({
+      enrollment
+    });
+    quiz.save()
       .then(() => {
-        res.status(201).json({
-          server: 'Acceso del estudiante modificado'
-        });
+        res.status(200).json({
+          server: 'Cuestionario iniciado',
+          timeStamp: quiz.created_at
+        });  
       })
       .catch((err) => {
-        console.log(err.code);
         if (Array.isArray(err) && err[0] instanceof ValidationError) {
           const valErrors = removeUndefined(err);
           res.status(400).json({
@@ -39,17 +42,12 @@ export default async(req: Request, res: Response) => {
           });
         }
       });
-  } catch(err) {
-    if(err instanceof Error) {
-      if(err.message == 'No enrollment') {
-        res.status(404).json({
-          server: 'Inscripcion no encontrada'
-        });
-      } else {
-        res.status(500).json({
-          server: 'Error interno del servidor'
-        });
-      }
+  } catch (err) {
+    if (err instanceof Error) {
+      logger.error(err);
+      res.status(500).json({
+        server: 'Error interno en el servidor'
+      });
     }
   }
 }

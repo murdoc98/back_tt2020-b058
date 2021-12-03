@@ -3,6 +3,7 @@ import { BaseEntity, BeforeInsert, Column, Entity, OneToMany, PrimaryColumn, Uni
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import Enrollment from "models/Enrollment.model";
+import Quiz from "models/Quiz.model";
 
 interface InewStudent {
   name: string;

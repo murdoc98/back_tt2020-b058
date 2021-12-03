@@ -1,0 +1,62 @@
+tags:
+  name: Estudiantes - Cuestionarios
+  description: En este modulo se realiza todo lo relacionado a  los cuestionarios
+paths:
+  /students/quiz:
+    post:
+      summary: Iniciar cuestionario
+      description: Indica el inicio de un nuevo cuestionario
+      tags: [Estudiantes - Cuestionarios]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group:
+                  type: string
+                  example: 76112503-1036-42af-95f5-2f0f9f00995e
+      responses:
+        '200':
+          description: Inicia un nuevo cuestionario
+  /students/questions:
+    get:
+      summary: Obtener pregunta
+      description: Obtiene una pregunta del cuestionario actual
+      tags: [Estudiantes - Cuestionarios]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Obtiene una pregunta
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 76112503-1036-42af-95f5-2f0f9f00995e
+                    name:
+                      type: string
+                      example: 3CV234
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto

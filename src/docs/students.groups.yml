@@ -85,3 +85,20 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /students/groups/{groupId}/quizzes:
+    get:
+      summary: Obtiene todos los cuestionarios realizados en el grupo especifico
+      description: Muesrta el registro de todos los cuestionarios realizados en ese grupo
+      tags: [Estudiantes - Cuestionarios]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Obtiene la lista de todos los cuestionarios realizados asociados al alumno y al grupo
