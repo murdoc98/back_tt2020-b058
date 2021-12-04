@@ -38,6 +38,46 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /students/groups/{groupId}:
+    get:
+      summary: Obtener grupo especifico
+      description: Obtener un grupo en especifico del cual el alumno autenticado actualmente esta inscrito
+      tags: [Estudiantes - Grupos]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: groupId
+        in: path
+        schema: 
+          type: string
+      responses:
+        '200':
+          description: Muestra los grupos generados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 76112503-1036-42af-95f5-2f0f9f00995e
+                    name:
+                      type: string
+                      example: 3CV234
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
   /students/groups/{groupId}/enroll:
     post:
       summary: Inscripcion a un grupo
@@ -102,3 +142,32 @@ paths:
       responses:
         '200':
           description: Obtiene la lista de todos los cuestionarios realizados asociados al alumno y al grupo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 76112503-1036-42af-95f5-2f0f9f00995e
+                    created_at:
+                      type: string
+                      example: 2021-12-04T07:11:37.665Z
+                    status:
+                      type: string
+                      example: En progreso
+                    totalAnswers:
+                      type: number
+                      example: 5
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto

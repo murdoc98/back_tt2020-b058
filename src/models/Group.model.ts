@@ -112,6 +112,22 @@ export default class Group extends BaseEntity {
     if (!response) throw Error('No group');
     return response;
   }
+  public async getGroupByStudent(studentId: string, groupId: string) {
+    if (!(uuidValidate(studentId) && uuidVersion(studentId) === 4))
+      throw Error('No group');
+    if (!(uuidValidate(groupId) && uuidVersion(groupId) === 4))
+      throw Error('No group');
+    const response = await getRepository(Group)
+      .createQueryBuilder('group')
+      .leftJoinAndSelect('group.enrollments', 'enrollments')
+      .leftJoin('enrollments.student', 'student')
+      .leftJoinAndSelect('enrollments.quizzes', 'quizzes')
+      .where('group.id = :groupId', { groupId })
+      .andWhere('student.id = :studentId', { studentId })
+      .getOne();
+    if(!response) throw Error('No group');
+    return response;
+  }
   @BeforeInsert()
   async validateModel(): Promise<void> {
     this.id = uuidv4();
