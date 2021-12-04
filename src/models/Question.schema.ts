@@ -17,7 +17,15 @@ const QuestionSchema = new Schema({
     },
     image: {
         type: String
-    }
+    },
+    complexity: {
+        type: Number
+    },
+    options: [{
+        variables: { type : Array , "default" : [] },
+        answer: { type : Array , "default" : [] },
+        complexity: { type: Number }
+    }]
 });
 
 const Question = mongoose.model('Question', QuestionSchema);

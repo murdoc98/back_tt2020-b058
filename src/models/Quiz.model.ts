@@ -1,6 +1,6 @@
 import { IsString, IsUUID, validateOrReject } from "class-validator";
 import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, getRepository, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, version as uuidVersion, validate as uuidValidate } from 'uuid';
 import Answer from "models/Answer.model";
 import Enrollment from "./Enrollment.model";
 
@@ -40,6 +40,22 @@ export default class Quiz extends BaseEntity {
       params.enrollment instanceof Enrollment ? this.enrollment = params.enrollment : this.enrollmentId = params.enrollment;
     }
   };
+  public async getQuiz(quizId: string) {
+    if (!(uuidValidate(quizId) && uuidVersion(quizId) === 4))
+      throw Error('No quiz');
+    const response = await getRepository(Quiz)
+      .createQueryBuilder('quiz')
+      .leftJoinAndSelect('quiz.answers', 'answers')
+      .where('quiz.id = :quizId', { quizId })
+      .getOne();
+    if(!response) throw Error('No quiz');
+    this.id = response.id;
+    this.created_at = response.created_at;
+    this.updated_at = response.updated_at;
+    this.enrollmentId = response.enrollmentId;
+    this.status = this.getStatus(response);
+    this.totalAnswers = this.answers ? this.answers.length : 0;
+  }
   public async getQuizzesByStudent(studentId: string, groupId:string) {
     const response = await getRepository(Quiz)
       .createQueryBuilder('quiz')
@@ -49,21 +65,22 @@ export default class Quiz extends BaseEntity {
       .andWhere('enrollment.groupId = :groupId', { groupId })
       .getMany();
     response.forEach(quiz => {
-      let status: string;
-      if(!lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length >= 10) {
-        status = 'Completo'
-      } else if(lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length < 10) {
-        status = 'En proceso'
-      } else {
-        status = 'Incompleto'
-      }
-      quiz.status = status;
+      quiz.status = this.getStatus(quiz);
       quiz.totalAnswers = quiz.answers!.length;
       delete quiz.answers;
       delete quiz.updated_at;
       delete quiz.enrollmentId;
     });
     return response;
+  }
+  public getStatus(quiz: Quiz) {
+    if(!lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length >= 10) {
+      return 'Completo'
+    } else if(lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length < 10) {
+      return 'En proceso'
+    } else {
+      return 'Incompleto'
+    }
   }
 
   @BeforeInsert()

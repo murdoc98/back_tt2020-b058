@@ -135,48 +135,195 @@ const question10 = new Question({
   description: 'Los números pueden ser decimales o fracciones',
   image: null
 });
+
+// Area de figuras geometricas
 const question11 = new Question({
-  statement: 'Calcula el area de la siguiente figura, donde x = $1',
+  statement: 'Calcula el area del siguiente cuadrado en donde cada lado es igual a $',
   general_topic: 'Magnitudes y medidas.',
   topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'area-cuadrado-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
 const question12 = new Question({
-  statement: 'Calcula el perimetro de la siguiente figura, donde x = $1',
+  statement: 'Calcula el area del siguiente rectangulo en donde la base es igual a $ y la altura igual a $',
   general_topic: 'Magnitudes y medidas.',
   topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'area-rectangulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
 const question13 = new Question({
-  statement: 'Calcula el volumen de la siguiente figura, donde x = $1',
+  statement: 'Calcula el area del siguiente rombo en donde la diagonal D es igual a $ y la diagonal d es igual a $',
   general_topic: 'Magnitudes y medidas.',
   topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'area-rombo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
 const question14 = new Question({
-  statement: 'Obtén la media aritmética del siguiente conjunto de datos: $1, $2, $3, $4, $5',
-  general_topic: 'Estadistica',
-  topic: 'Analisis de datos',
+  statement: 'Calcula el area del siguiente triangulo, donde la base b es igual a $ y la altura h es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'area-circulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
 const question15 = new Question({
-  statement: 'Obtén la mediana del siguiente conjunto de datos: $1, $2, $3, $4, $5',
-  general_topic: 'Estadistica',
-  topic: 'Analisis de datos',
+  statement: 'Calcula el area del siguiente circulo, donde el radio es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'area-circulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
+
+// Perimetro de figuras geometricas
 const question16 = new Question({
-  statement: 'Obtén la moda del siguiente conjunto de datos: $1, $2, $3, $4, $5',
-  general_topic: 'Estadistica',
-  topic: 'Analisis de datos',
+  statement: 'Calcula el perimetro del siguiente cuadrado donde el lado L es igual a L',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
   description: 'Los números pueden ser decimales o fracciones',
-  image: null
+  image: 'perimetro-cuadrado-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
 });
+const question17 = new Question({
+  statement: 'Calcula el perimetro del siguiente rectangulo donde la base L es igual a $ y la altura l es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
+  description: 'Los números pueden ser decimales o fracciones',
+  image: 'perimetro-rectangulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
+});
+const question18 = new Question({
+  statement: 'Calcula el perimetro del siguiente rombo donde el lado L es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
+  description: 'Los números pueden ser decimales o fracciones',
+  image: 'perimetro-rectangulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
+});
+const question19 = new Question({
+  statement: 'Calcula el perimetro del siguiente tirangulo donde el lado L es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
+  description: 'Los números pueden ser decimales o fracciones',
+  image: 'perimetro-rectangulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
+});
+const question20 = new Question({
+  statement: 'Calcula el perimetro del siguiente circulo donde el radio r es igual a $',
+  general_topic: 'Magnitudes y medidas.',
+  topic: 'Forma espacio y medida',
+  description: 'Los números pueden ser decimales o fracciones',
+  image: 'perimetro-circulo-x2.png',
+  complexity: 1,
+  options: [
+    {
+      variables: [1, 2],
+      answer: [1],
+      complexity: 1
+    }
+  ]
+});
+// const question12 = new Question({
+//   statement: 'Calcula el perimetro de la siguiente figura, donde x = $1',
+//   general_topic: 'Magnitudes y medidas.',
+//   topic: 'Forma espacio y medida',
+//   description: 'Los números pueden ser decimales o fracciones',
+//   image: null
+// });
+// const question13 = new Question({
+//   statement: 'Calcula el volumen de la siguiente figura, donde x = $1',
+//   general_topic: 'Magnitudes y medidas.',
+//   topic: 'Forma espacio y medida',
+//   description: 'Los números pueden ser decimales o fracciones',
+//   image: null
+// });
+// const question14 = new Question({
+//   statement: 'Obtén la media aritmética del siguiente conjunto de datos: $1, $2, $3, $4, $5',
+//   general_topic: 'Estadistica',
+//   topic: 'Analisis de datos',
+//   description: 'Los números pueden ser decimales o fracciones',
+//   image: null
+// });
+// const question15 = new Question({
+//   statement: 'Obtén la mediana del siguiente conjunto de datos: $1, $2, $3, $4, $5',
+//   general_topic: 'Estadistica',
+//   topic: 'Analisis de datos',
+//   description: 'Los números pueden ser decimales o fracciones',
+//   image: null
+// });
+// const question16 = new Question({
+//   statement: 'Obtén la moda del siguiente conjunto de datos: $1, $2, $3, $4, $5',
+//   general_topic: 'Estadistica',
+//   topic: 'Analisis de datos',
+//   description: 'Los números pueden ser decimales o fracciones',
+//   image: null
+// });
 
 const seed = async () => {
   try {

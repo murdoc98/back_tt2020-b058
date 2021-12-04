@@ -24,7 +24,7 @@ paths:
       responses:
         '200':
           description: Inicia un nuevo cuestionario
-  /students/questions:
+  /students/quiz/{quizId}/question:
     get:
       summary: Obtener pregunta
       description: Obtiene una pregunta del cuestionario actual
@@ -32,6 +32,10 @@ paths:
       parameters:
       - name: token
         in: header
+        schema:
+          type: string
+      - name: quizId
+        in: path
         schema:
           type: string
       responses:

@@ -23,7 +23,7 @@ export default function createServer(): express.Application {
     app.use(morgan('dev'));
     app.use(swaggerSetup);
   }
-  app.use(express.static('public'));
+  app.use('/media', express.static(__dirname + '/public'));
   app.use(helmet());
   app.use(express.json());
   app.use(
