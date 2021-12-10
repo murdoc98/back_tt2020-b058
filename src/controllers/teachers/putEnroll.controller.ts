@@ -4,7 +4,7 @@ import logger from 'logger';
 import Enrollment from 'models/Enrollment.model';
 import removeUndefined from 'helpers/removeUndefined.helper';
 
-export default async(req: Request, res: Response) => {
+export default async (req: Request, res: Response) => {
   try {
     const enrollment = new Enrollment();
     await enrollment.getEnrollment(req.params.studentId, req.params.groupId);
@@ -16,7 +16,6 @@ export default async(req: Request, res: Response) => {
         });
       })
       .catch((err) => {
-        console.log(err.code);
         if (Array.isArray(err) && err[0] instanceof ValidationError) {
           const valErrors = removeUndefined(err);
           res.status(400).json({
@@ -28,10 +27,10 @@ export default async(req: Request, res: Response) => {
             server: 'Llaves foraneas invalidas o incorrectas'
           });
         } //else if ('23505' === err.code)
-          //res.status(405).json({
-          //  server:
-          //    'Alguno de los siguientes campos (nombre completo, email) ya han sido registrados en el sistema'
-          //});
+        //res.status(405).json({
+        //  server:
+        //    'Alguno de los siguientes campos (nombre completo, email) ya han sido registrados en el sistema'
+        //});
         else {
           logger.error(err.code);
           res.status(500).json({
@@ -39,13 +38,15 @@ export default async(req: Request, res: Response) => {
           });
         }
       });
-  } catch(err) {
-    if(err instanceof Error) {
-      if(err.message == 'No enrollment') {
+  } catch (err) {
+    if (err instanceof Error) {
+      if (err.message == 'No enrollment') {
         res.status(404).json({
           server: 'Inscripcion no encontrada'
         });
       } else {
+        console.trace(err);
+        logger.error(err);
         res.status(500).json({
           server: 'Error interno del servidor'
         });

@@ -51,7 +51,7 @@ export default class Enrollment extends BaseEntity {
       throw Error('No enrollment');
     const query = await getRepository(Enrollment)
       .createQueryBuilder('enrollment')
-      .where('enrollment.id = :studentId', { enrollmentId })
+      .where('enrollment.id = :enrollmentId', { enrollmentId })
       .andWhere('enrollment.groupId = :groupId', { groupId })
       .getOne();
     if(!query) throw Error('No enrollment');

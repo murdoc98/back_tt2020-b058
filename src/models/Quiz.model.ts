@@ -16,7 +16,7 @@ export default class Quiz extends BaseEntity {
 
   @CreateDateColumn()
   created_at?: Date;
-    
+
   @UpdateDateColumn()
   updated_at?: Date;
 
@@ -31,7 +31,9 @@ export default class Quiz extends BaseEntity {
 
   // Calculated attributes
   status?: string;
-  totalAnswers?: number; 
+  totalAnswers?: number;
+  plainGrade?: number;
+  processGrade?: number;
 
   public constructor(params?: InewQuiz) {
     super();
@@ -48,15 +50,16 @@ export default class Quiz extends BaseEntity {
       .leftJoinAndSelect('quiz.answers', 'answers')
       .where('quiz.id = :quizId', { quizId })
       .getOne();
-    if(!response) throw Error('No quiz');
+    if (!response) throw Error('No quiz');
     this.id = response.id;
     this.created_at = response.created_at;
     this.updated_at = response.updated_at;
     this.enrollmentId = response.enrollmentId;
+    this.answers = response.answers;
     this.status = this.getStatus(response);
     this.totalAnswers = this.answers ? this.answers.length : 0;
   }
-  public async getQuizzesByStudent(studentId: string, groupId:string) {
+  public async getQuizzesByStudent(studentId: string, groupId: string) {
     const response = await getRepository(Quiz)
       .createQueryBuilder('quiz')
       .leftJoin('quiz.enrollment', 'enrollment')
@@ -65,8 +68,16 @@ export default class Quiz extends BaseEntity {
       .andWhere('enrollment.groupId = :groupId', { groupId })
       .getMany();
     response.forEach(quiz => {
+      let generalCal = 0;
+      let specCal = 0;
+      quiz.answers?.forEach(specAnswer => {
+        generalCal += specAnswer.accuracy!;
+        specCal += specAnswer.accuracy! * specAnswer.espComplexity! * specAnswer.genComplexity!;
+      });
       quiz.status = this.getStatus(quiz);
       quiz.totalAnswers = quiz.answers!.length;
+      quiz.plainGrade = generalCal;
+      quiz.processGrade = specCal;
       delete quiz.answers;
       delete quiz.updated_at;
       delete quiz.enrollmentId;
@@ -74,9 +85,9 @@ export default class Quiz extends BaseEntity {
     return response;
   }
   public getStatus(quiz: Quiz) {
-    if(!lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length >= 10) {
+    if (lessThanOneHourAgo(quiz.created_at!.getTime()) && quiz.answers!.length >= 10) {
       return 'Completo'
-    } else if(lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length < 10) {
+    } else if (lessThanOneHourAgo(quiz.created_at!.getTime()) && quiz.answers!.length < 10) {
       return 'En proceso'
     } else {
       return 'Incompleto'

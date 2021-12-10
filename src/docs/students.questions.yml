@@ -2,7 +2,7 @@ tags:
   name: Estudiantes - Cuestionarios
   description: En este modulo se realiza todo lo relacionado a  los cuestionarios
 paths:
-  /students/quiz:
+  /students/groups/{groupId}/quiz:
     post:
       summary: Iniciar cuestionario
       description: Indica el inicio de un nuevo cuestionario
@@ -12,15 +12,10 @@ paths:
         in: header
         schema:
           type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                group:
-                  type: string
-                  example: 76112503-1036-42af-95f5-2f0f9f00995e
+      - name: groupId
+        in: path
+        schema:
+          type: string
       responses:
         '200':
           description: Inicia un nuevo cuestionario
@@ -60,6 +55,16 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+        '500':
+          description: Ya hay un cuestionario activo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Ya hay un cuestionario activo
   /students/quiz/{quizId}/question:
     get:
       summary: Obtener pregunta
@@ -90,6 +95,26 @@ paths:
                     name:
                       type: string
                       example: 3CV234
+        '400':
+          description: Este cuestionario ha sido cerrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Este cuestionario ha sido cerrado
+        '404':
+          description: Cuestionario no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Cuestionario no encotrado
         '405':
           description: Error de usuario, para mas informacion consultar la respuesta del servidor
           content:
@@ -100,3 +125,80 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+    post:
+      summary: Responder pregunta
+      description: Publica la respuesta generada por el alumno
+      tags: [Estudiantes - Cuestionarios]
+      parameters:
+      - name: token
+        in: header
+        schema:
+          type: string
+      - name: quizId
+        in: path
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                  example: 76112503-1036-42af-95f5-2f0f9f00995e
+                option:
+                  type: string
+                  example: 76112503-1036-42af-95f5-2f0f9f00995e
+                answers:
+                  type: array
+                  items:
+                    type: number
+                    example: 5
+      responses:
+        '201':
+          description: Pregunta registrada exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 76112503-1036-42af-95f5-2f0f9f00995e
+                    name:
+                      type: string
+                      example: 3CV234
+        '400':
+          description: Cuestionario finalizado, ya no se pueden registrar mas respuestas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Cuestionario finalizado, ya no se pueden registrar mas respuestas
+        '404':
+          description: Cuestionario no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Cuestionario no encotrado
+        '405':
+          description: Error de usuario, para mas informacion consultar la respuesta del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Token corrupto
+

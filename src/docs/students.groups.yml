@@ -68,6 +68,16 @@ paths:
                     name:
                       type: string
                       example: 3CV234
+        '404':
+          description: El grupo o el alumno asociado al grupo no fueron encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Grupo no encontrado
         '405':
           description: Error de usuario, para mas informacion consultar la respuesta del servidor
           content:

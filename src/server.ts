@@ -36,7 +36,7 @@ export default function createServer(): express.Application {
     cors({
       methods: ['GET', 'PUT', 'POST', 'DELETE'],
       origin: '*',
-      allowedHeaders: ['Content-Type', 'session'],
+      allowedHeaders: ['Content-Type', 'token'],
       exposedHeaders: ['Content-Type', 'Content-disposition', 'token']
     })
   );

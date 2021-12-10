@@ -11,8 +11,8 @@ interface InewGroup {
 }
 interface formattedStudent {
   id: string | undefined;
-  name: string | undefined; 
-  surname: string | undefined; 
+  name: string | undefined;
+  surname: string | undefined;
   secondSurname: string | undefined;
 }
 
@@ -23,9 +23,9 @@ export default class Group extends BaseEntity {
   @IsUUID()
   id?: string;
 
-  @Column({ type: 'varchar', length: 30, nullable: false })
+  @Column({ type: 'varchar', length: 50, nullable: false })
   @IsString()
-  @Length(3, 30)
+  @Length(3, 50)
   name?: string;
 
   @Column({ nullable: false, select: false })
@@ -48,7 +48,7 @@ export default class Group extends BaseEntity {
     const response = await getRepository(Group)
       .createQueryBuilder('group')
       .leftJoinAndSelect('group.enrollments', 'enrollments')
-      .where('group.teacher = :teacherId', {teacherId})
+      .where('group.teacher = :teacherId', { teacherId })
       .getMany() as any;
     response.forEach((group: { enrollments: any[]; }) => {
       const enrolls = group.enrollments?.reduce((i, current) => {
@@ -88,11 +88,9 @@ export default class Group extends BaseEntity {
         surname: student.student?.surname,
         secondSurname: student.student?.secondSurname
       }
-      if(student.status) enrolled.push(formatted);
+      if (student.status) enrolled.push(formatted);
       else unenrolled.push(formatted);
     });
-    console.log(enrolled);
-    console.log(unenrolled);
     return {
       id: response.id,
       name: response.name,
@@ -125,7 +123,7 @@ export default class Group extends BaseEntity {
       .where('group.id = :groupId', { groupId })
       .andWhere('student.id = :studentId', { studentId })
       .getOne();
-    if(!response) throw Error('No group');
+    if (!response) throw Error('No group');
     return response;
   }
   @BeforeInsert()

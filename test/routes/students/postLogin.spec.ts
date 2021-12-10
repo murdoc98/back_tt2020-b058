@@ -1,8 +1,10 @@
 import request from 'supertest';
+import { expect } from 'chai';
 import { getConnection } from 'typeorm';
+
+// Models and instances from original project
 import createServer from '../../../src/server';
 import sqlConnection from '../../../src/sqlConnection';
-import { expect } from 'chai';
 
 const app = createServer();
 

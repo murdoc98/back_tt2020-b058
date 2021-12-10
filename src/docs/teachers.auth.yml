@@ -2,6 +2,53 @@ tags:
   name: Profesores - Autenticacion
   description: En este modulo se realiza todo lo referente a la gestion de las cuentas de tipo estudiante.
 paths:
+  /teachers/auth/signin:
+    post:
+      summary: Registra a un nuevo profesor
+      description: Registra a un nuevo profesor en la plataforma
+      tags: [Profesores - Autenticacion]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Alejandro
+                surname:
+                  type: string
+                  example: Perez
+                secondSurname:
+                  type: string
+                  example: Hernandez
+                email:
+                  type: string
+                  example: john@doe.com
+                password:
+                  type: string
+                  example: RandomAccess98!
+      responses:
+        '200':
+          description: Usuario registrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Estudiante registrado
+        '500':
+          description: Usuario registrado previamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Usuario registrado previamente
   /teachers/auth/login:
     post:
       summary: Autentica a un estudiante dentro de la plataforma
@@ -116,3 +163,28 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /teachers/auth/resetPassword:
+    put: 
+      summary: Restablecer la contraseña del usuario
+      description: Restablece la contraseña del usuario y esta es enviada al correo electronico registrado
+      tags: [Profesores - Autenticacion]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: oscarmartinez1998@hotmail.es
+      responses:
+        '200':
+          description: Contraseña modificada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Llaves enviadas al correo electronico registrado

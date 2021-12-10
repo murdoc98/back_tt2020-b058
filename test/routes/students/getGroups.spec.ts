@@ -1,10 +1,13 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
-import mongoose from 'mongoose';
-import createServer from '../../../src/server';
-import getToken from '../../helpers/getStudentToken.helper';
-import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
+
+// Models and instances from original project
+import createServer from '../../../src/server';
+import sqlConnection from '../../../src/sqlConnection';
+
+// Helpers
+import getToken from '../../helpers/getStudentToken.helper';
 
 const app = createServer();
 

@@ -1,26 +1,26 @@
 import request from 'supertest';
 import { getConnection } from 'typeorm';
-import mongoose from 'mongoose';
-import createServer from '../../../src/server';
-import getToken from '../../helpers/getStudentToken.helper';
-import getToken2 from '../../helpers/getEnrollStudentToken.helper';
-import getGroup from '../../helpers/getGroup.helper';
-import sqlConnection from '../../../src/sqlConnection';
 import { expect } from 'chai';
 
+// Models and instances from original project
+import createServer from '../../../src/server';
+import sqlConnection from '../../../src/sqlConnection';
 import Group from '../../../src/models/Group.model';
+
+// Helpers
+import getToken from '../../helpers/getStudentToken.helper';
+import getGroup from '../../helpers/getGroup.helper';
+
 
 const app = createServer();
 
 describe('POST /api/students/groups/<groupId>/enroll - Solicita la inscripcion a un grupo', () => {
   let token1: string;
-  let token2: string;
   let group: Group;
   before(async () => {
     await sqlConnection();
     token1 = await getToken();
-    token2 = await getToken2();
-    group = await getGroup();
+    group = await getGroup('1°C Turno Vespertino Matematicas');
   });
   after(async () => await getConnection().close());
   it('200 - El alumno ha solicitado la inscipcion a un grupo', (done) => {
@@ -38,7 +38,7 @@ describe('POST /api/students/groups/<groupId>/enroll - Solicita la inscripcion a
   it('304 - El alumno ya ha sido inscrito en el grupo', (done) => {
     request(app)
       .post(`/api/students/groups/${group.id}/enroll`)
-      .set('token', token2)
+      .set('token', token1)
       .expect(304, done);
   });
   it('404 - El grupo no ha sido encontrado (uuidv4 invalido)', (done) => {

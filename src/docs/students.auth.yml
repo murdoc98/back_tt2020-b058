@@ -2,6 +2,86 @@ tags:
   name: Estudiantes - Autenticacion
   description: En este modulo se realiza todo lo referente a la gestion de las cuentas de tipo estudiante.
 paths:
+  /students/auth/signin:
+    post:
+      summary: Registra a un nuevo estudiante
+      description: Registra a un nuevo estudiante en la plataforma
+      tags: [Estudiantes - Autenticacion]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Alejandro
+                surname:
+                  type: string
+                  example: Perez
+                secondSurname:
+                  type: string
+                  example: Hernandez
+                email:
+                  type: string
+                  example: john@doe.com
+                password:
+                  type: string
+                  example: RandomAccess98!
+      responses:
+        '201':
+          description: Usuario registrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Estudiante registrado
+        '400':
+          description: Hay errores u omisiones en el input, para mas informacion revisar el response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Error en el input
+                  errores:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        value:
+                          type: string
+                          example: test
+                        property:
+                          type: string
+                          example: field
+                        children:
+                          type: array
+                          items:
+                            type: string
+                            example: test
+                        contraints:
+                          type: object
+                          properties:
+                            isString:
+                              type: string
+                              example: name must be a string
+        '405':
+          description: Usuario registrado previamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Alguno de los siguientes campos (nombre completo, email) ya han sido registrados en el sistema
+          
   /students/auth/login:
     post:
       summary: Autentica a un estudiante dentro de la plataforma
@@ -116,3 +196,28 @@ paths:
                   server:
                     type: string
                     example: Token corrupto
+  /students/auth/resetPassword:
+    put: 
+      summary: Restablecer la contraseña del usuario
+      description: Restablece la contraseña del usuario y esta es enviada al correo electronico registrado
+      tags: [Estudiantes - Autenticacion]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: oscarmartinez1998lol@gmail.com
+      responses:
+        '200':
+          description: Contraseña modificada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: Llaves enviadas al correo electronico registrado
