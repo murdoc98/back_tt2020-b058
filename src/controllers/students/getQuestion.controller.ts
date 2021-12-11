@@ -10,6 +10,10 @@ export default async (req: Request, res: Response) => {
     if (quiz.status == 'En proceso') {
       const [question] = await Question.aggregate([{ $sample: { size: 1 } }]);
       const answer = question.options[Math.floor(Math.random() * question.options.length)];
+      answer.paths.forEach((path: { accuracy: any; _id: any; }) => {
+        delete path.accuracy;
+        delete path._id;
+      });
       const response = {
         id: question._id,
         statement: question.statement,
@@ -18,7 +22,8 @@ export default async (req: Request, res: Response) => {
         image: question.image,
         options: {
           id: answer._id,
-          variables: answer.variables
+          variables: answer.variables,
+          paths: answer.paths
         }
       }
       res.status(200).json({

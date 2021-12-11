@@ -20,6 +20,7 @@ export default async(req: Request, res: Response) => {
         .then(() => {
           res.status(200).json({
             server: 'Cuestionario iniciado',
+            quizId: quiz.id,
             timeStamp: quiz.created_at
           });  
         })

@@ -22,12 +22,12 @@ const student1 = new Student({
 });
 student1.setPassword('thisIsAtest98!');
 const student2 = new Student({
-  name: 'Jose',
-  surname: 'Rivera',
-  secondSurname: 'Ramirez',
-  email: 'john@example.com'
+  name: 'Arturo',
+  surname: 'Jacome',
+  secondSurname: 'Portillo',
+  email: 'a.m.jacomep@hotmail.com'
 });
-student2.setPassword('thisIsAtest98!');
+student2.setPassword('InfinitumGG9620!');
 const student3 = new Student({
   name: 'Jesus',
   surname: 'Montesinos',
@@ -94,10 +94,10 @@ const teacher1 = new Teacher({
 });
 teacher1.setPassword('thisIsAtest98!');
 const teacher2 = new Teacher({
-  name: 'Genaro',
-  surname: 'Juarez',
-  secondSurname: 'Martinez',
-  email: 'murdocw98@gmail.com'
+  name: 'Mohamed',
+  surname: 'Jacome',
+  secondSurname: 'Portillo',
+  email: 'arturomjacomep@gmail.com'
 });
 teacher2.setPassword('thisIsAtest98!');
 
@@ -181,6 +181,16 @@ const enroll11 = new Enrollment({
   group: group5
 });
 enroll11.status = true;
+const enroll12 = new Enrollment({
+  student: student1,
+  group: group2
+});
+enroll12.status = true;
+const enroll13 = new Enrollment({
+  student: student1,
+  group: group3
+});
+enroll13.status = true;
 
 //Aquí empezara a revisar las preguntas
 const question1 = new Question({
@@ -2058,6 +2068,8 @@ const seed = async () => {
     await enroll9.save();
     await enroll10.save();
     await enroll11.save();
+    await enroll12.save();
+    await enroll13.save();
     logger.warn('Enrolls created');
     await question1.save();
     await question2.save();

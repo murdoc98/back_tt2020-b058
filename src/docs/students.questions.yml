@@ -22,19 +22,17 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    server: 
-                      type: string
-                      example: Nuevo cuestionario iniciado
-                    quizId:
-                      type: string
-                      example: 76112503-1036-42af-95f5-2f0f9f00995e
-                    timestamp:
-                      type: string
-                      example: 2021-12-04T07:11:37.665Z
+                type: object
+                properties:
+                  server: 
+                    type: string
+                    example: Cuestionario iniciado
+                  quizId:
+                    type: string
+                    example: 76112503-1036-42af-95f5-2f0f9f00995e
+                  timestamp:
+                    type: string
+                    example: 2021-12-04T07:11:37.665Z
         '404':
           description: El grupo no fue encontrado
           content:

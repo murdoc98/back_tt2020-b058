@@ -24,7 +24,11 @@ const QuestionSchema = new Schema({
     options: [{
         variables: { type : Array , "default" : [] },
         answer: { type : Array , "default" : [] },
-        complexity: { type: Number }
+        complexity: { type: Number },
+        paths: [{
+            answer: { type: Array, "default": [] },
+            accuracy: { type: Number }
+        }]
     }]
 });
 

@@ -19,7 +19,7 @@ export default async (req: Request, res: Response) => {
         quizId: req.params.quizId,
         genComplexity: question.complexity,
         espComplexity: answer.complexity,
-        accuracy: evaluateAnswer(req.body.answers as Array<number>, answer.answer),
+        accuracy: evaluateAnswer(req.body.answers as Array<number>, answer.paths),
         questionId: question.id,
         optionId: answer.id
       });
@@ -59,12 +59,10 @@ export default async (req: Request, res: Response) => {
   }
 };
 
-const evaluateAnswer = (studentAnswer: Array<any>, correctAnswer: Array<any>) => {
-  if(studentAnswer.length != correctAnswer.length) return 0;
-  else {
-    for(let i = 0; i < correctAnswer.length; i++) {
-      if(studentAnswer[i] != correctAnswer[i]) return 0;
-    }
-  }
-  return 1;
+const evaluateAnswer = (studentAnswer: Array<any>, answers: Array<any>) => {
+  console.log(answers[0].answer, studentAnswer);
+  console.log(answers[0].answer.toString() == studentAnswer.toString());
+  console.log(studentAnswer);
+  const res = answers.find((answer) => answer.answer.toString() == studentAnswer.toString());
+  return res ? res.accuracy : 0;
 }
