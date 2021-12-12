@@ -38,9 +38,12 @@ export default async (req: Request, res: Response) => {
             res.status(404).json({
               server: 'Grupo no encontrado'
             });
-          else res.status(500).json({
-            server: 'Error interno en la base de datos'
-          });
+          else {
+            logger.error(err);
+            res.status(500).json({
+              server: 'Error interno en la base de datos'
+            });
+          }
         });
     }
   } catch (err) {
