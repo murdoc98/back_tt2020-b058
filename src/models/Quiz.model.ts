@@ -85,7 +85,9 @@ export default class Quiz extends BaseEntity {
     return response;
   }
   public getStatus(quiz: Quiz) {
-    if (lessThanOneHourAgo(quiz.created_at!.getTime()) && quiz.answers!.length >= 10) {
+    console.log(lessThanOneHourAgo(quiz.created_at!.getTime()));
+    console.log(quiz.answers!.length);
+    if (!lessThanOneHourAgo(quiz.created_at!.getTime()) || quiz.answers!.length >= 10) {
       return 'Completo'
     } else if (lessThanOneHourAgo(quiz.created_at!.getTime()) && quiz.answers!.length < 10) {
       return 'En proceso'

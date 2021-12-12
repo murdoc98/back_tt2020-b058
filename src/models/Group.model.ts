@@ -118,7 +118,7 @@ export default class Group extends BaseEntity {
     const response = await getRepository(Group)
       .createQueryBuilder('group')
       .leftJoinAndSelect('group.enrollments', 'enrollments')
-      .leftJoin('enrollments.student', 'student')
+      .leftJoinAndSelect('enrollments.student', 'student')
       .leftJoinAndSelect('enrollments.quizzes', 'quizzes')
       .where('group.id = :groupId', { groupId })
       .andWhere('student.id = :studentId', { studentId })
