@@ -9,9 +9,8 @@ export default async(req: Request, res: Response) => {
     const response = await quizzes.getQuizzesByStudent(req.user.id, req.params.groupId);
     const x_values = response.map((quiz) => quiz.created_at!.getTime());
     const y_values = response.map((quiz) => quiz.processGrade!);
-    console.log(x_values, y_values);
-    console.log(await lr(x_values, y_values));
-    res.status(200).json(response);
+    let lrExpect = await lr(x_values, y_values);
+    res.status(200).json({ ...response, lrExpect });
   } catch (err) {
     if (err instanceof Error) {
       logger.error(err);

@@ -259,7 +259,7 @@ const question1 = new Question({
   ]
 });
 const question2 = new Question({
-  statement: 'Convierte la siguiente fracción a notación decimal $1, $2',
+  statement: 'Convierte la siguiente fracción a notación decimal $1 / $2',
   general_topic: 'Numero, algebra y variacion',
   topic: 'Numeros',
   description: 'Los números pueden ser decimales o fracciones',
@@ -280,7 +280,7 @@ const question2 = new Question({
     {
       variables: [14, 20],
       answer: [0.7],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[0.6], accuracy:0.6},
         {answer:[0.7], accuracy:1},
@@ -289,36 +289,36 @@ const question2 = new Question({
       ]
     },
     {
-      variables: [6, 16],
-      answer: [0.375],
-      complexity: 1,
+      variables: [100, 125],
+      answer: [0.8],
+      complexity: 3,
       paths:[
         {answer:[0.3], accuracy:0.9},
         {answer:[0.4], accuracy:0.7},
-        {answer:[0.375], accuracy:1},
+        {answer:[0.8], accuracy:1},
         {answer:[0.1], accuracy:0.5},
       ]
     },
     {
-      variables: [14, 8],
-      answer: [1.75],
-      complexity: 1,
+      variables: [145, 32],
+      answer: [4.53],
+      complexity: 4,
       paths:[
-        {answer:[2], accuracy:0.7},
-        {answer:[1.75], accuracy:1},
+        {answer:[2.2], accuracy:0.7},
+        {answer:[4.53], accuracy:1},
         {answer:[1.8], accuracy:0.9},
         {answer:[1], accuracy:0.3},
       ]
     },
     {
-      variables: [1, 2],
+      variables: [87, 76],
       answer: [0.5],
-      complexity: 1,
+      complexity: 5,
       paths:[
-        {answer:[0.6], accuracy:0.9},
-        {answer:[0.5], accuracy:1},
-        {answer:[0.3], accuracy:0.7},
-        {answer:[1], accuracy:0.2},
+        {answer:[0.65], accuracy:0.9},
+        {answer:[0.50], accuracy:1},
+        {answer:[0.32], accuracy:0.7},
+        {answer:[1.14], accuracy:0.2},
       ]
     }
   ]
@@ -345,7 +345,7 @@ const question3 = new Question({
     {
       variables: [2.75],
       answer: [11, 4],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[11,3], accuracy:0.8},
         {answer:[10,4], accuracy:0.3},
@@ -356,7 +356,7 @@ const question3 = new Question({
     {
       variables: [3.12],
       answer: [78, 25],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[78,27], accuracy:0.3},
         {answer:[78,25], accuracy:1},
@@ -367,7 +367,7 @@ const question3 = new Question({
     {
       variables: [0.36],
       answer: [9, 25],
-      complexity: 1,
+      complexity: 4,
       paths:[
         {answer:[8,25], accuracy:0.8},
         {answer:[9,25], accuracy:1},
@@ -378,7 +378,7 @@ const question3 = new Question({
     {
       variables: [0.9],
       answer: [9, 10],
-      complexity: 1,
+      complexity: 5,
       paths:[
         {answer:[7,10], accuracy:0.7},
         {answer:[9,10], accuracy:1},
@@ -389,7 +389,7 @@ const question3 = new Question({
   ]
 });
 const question4 = new Question({
-  statement: 'Realiza la siguiente operación y expresa el resultado en decimal $1, $2, $3',
+  statement: 'Realiza la siguiente operación y expresa el resultado en decimal $1 $2 $3',
   general_topic: 'Numero, algebra y variacion',
   topic: 'Números, adición y sustracción',
   description: 'Los números pueden ser decimales o fracciones',
@@ -408,53 +408,53 @@ const question4 = new Question({
       ]
     },
     {
-      variables: [56, '-', 32],
-      answer: [24],
-      complexity: 1,
+      variables: [326, '-', 242],
+      answer: [84],
+      complexity: 2,
       paths:[
         {answer:[28], accuracy:0.2},
         {answer:[26], accuracy:0.5},
-        {answer:[24], accuracy:1},
+        {answer:[84], accuracy:1},
         {answer:[20], accuracy:0.1},
       ]
     },
     {
-      variables: [67, '+', 1],
-      answer: [68],  // number
-      complexity: 1,
+      variables: [67.3, '+', 14.2],
+      answer: [81.5],  // number
+      complexity: 3,
       paths:[
-        {answer:[68], accuracy:1},
-        {answer:[58], accuracy:0.1},
-        {answer:[69], accuracy:0.3},
-        {answer:[67], accuracy:0.5},
+        {answer:[81.5], accuracy:1},
+        {answer:[52.3], accuracy:0.1},
+        {answer:[78.3], accuracy:0.3},
+        {answer:[80.2], accuracy:0.5},
       ]
     },
     {
-      variables: [77, '+', 33],
-      answer: [110],
-      complexity: 1,
+      variables: [77.12, '+', 33.15],
+      answer: [110327],
+      complexity: 4,
       paths:[
-        {answer:[110], accuracy:1},
-        {answer:[108], accuracy:0.5},
-        {answer:[100], accuracy:0.1},
-        {answer:[111], accuracy:0.2},
+        {answer:[110.27], accuracy:1},
+        {answer:[108.15], accuracy:0.5},
+        {answer:[100.10], accuracy:0.1},
+        {answer:[111.11], accuracy:0.2},
       ]
     },
     {
-      variables: [12, '+', 23],
-      answer: [35],
-      complexity: 1,
+      variables: [101.2, '-', 98.32],
+      answer: [2.88],
+      complexity: 5,
       paths:[
-        {answer:[35], accuracy:1},
-        {answer:[30], accuracy:0.3},
-        {answer:[38], accuracy:0.4},
-        {answer:[40], accuracy:0.1},
+        {answer:[2.88], accuracy:1},
+        {answer:[1.21], accuracy:0.3},
+        {answer:[5.36], accuracy:0.4},
+        {answer:[5.32], accuracy:0.1},
       ]
     },
   ]
 });
 const question5 = new Question({
-  statement: 'Realiza la siguiente operación y expresa el resultado en fracción $1, $2, $3',
+  statement: 'Realiza la siguiente operación y expresa el resultado en fracción $1 $2 $3',
   general_topic: 'Numero, algebra y variacion',
   topic: 'Números, adición y sustracción',
   description: 'Los números pueden ser decimales o fracciones',
@@ -473,20 +473,20 @@ const question5 = new Question({
       ]
     },
     {
-      variables: [12, 'x', 6],
-      answer: [72],
-      complexity: 1,
+      variables: [12.5, 'x', 6.3],
+      answer: [78.75],
+      complexity: 2,
       paths:[
-        {answer:[66], accuracy:0.3},
-        {answer:[72], accuracy:1},
-        {answer:[70], accuracy:0.4},
-        {answer:[80], accuracy:0.1},
+        {answer:[66.36], accuracy:0.3},
+        {answer:[78.75], accuracy:1},
+        {answer:[70.23], accuracy:0.4},
+        {answer:[80.15], accuracy:0.1},
       ]
     },
     {
-      variables: [12, '/', 36],
+      variables: [120, '/', 360],
       answer: [1, 3],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[2,3], accuracy:0.3},
         {answer:[1,3], accuracy:1},
@@ -495,25 +495,25 @@ const question5 = new Question({
       ]
     },
     {
-      variables: [6, '/', 18],
+      variables: [68, '/', 184],
       answer: [1, 3],
-      complexity: 1,
+      complexity: 4,
       paths:[
-        {answer:[2,3], accuracy:0.7},
-        {answer:[1,3], accuracy:1},
-        {answer:[2,5], accuracy:0.3},
-        {answer:[1,5], accuracy:0.1},
+        {answer:[15,38], accuracy:0.7},
+        {answer:[17,46], accuracy:1},
+        {answer:[20,63], accuracy:0.3},
+        {answer:[12,32], accuracy:0.1},
       ]
     },
     {
-      variables: [7, '*', 7],
-      answer: [49],
-      complexity: 1,
+      variables: [13.31, '*', 17.21],
+      answer: [229.06],
+      complexity: 5,
       paths:[
-        {answer:[45], accuracy:0.4},
-        {answer:[49], accuracy:1},
-        {answer:[48], accuracy:0.7},
-        {answer:[50], accuracy:0.1},
+        {answer:[215.21], accuracy:0.4},
+        {answer:[229.06], accuracy:1},
+        {answer:[219.10], accuracy:0.7},
+        {answer:[200.12], accuracy:0.1},
       ]
     },
   ]
@@ -540,7 +540,7 @@ const question6 = new Question({
     {
       variables: [15, 12, 35],
       answer: [43.75],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[43], accuracy:0.8},
         {answer:[43.75], accuracy:1},
@@ -551,7 +551,7 @@ const question6 = new Question({
     {
       variables: [20, 5, 15],
       answer: [60],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[60], accuracy:1},
         {answer:[63], accuracy:0.2},
@@ -562,7 +562,7 @@ const question6 = new Question({
     {
       variables: [2, 9, 30],
       answer: [6.66],
-      complexity: 1,
+      complexity: 4,
       paths:[
         {answer:[6.5], accuracy:0.8},
         {answer:[6.66], accuracy:1},
@@ -573,7 +573,7 @@ const question6 = new Question({
     {
       variables: [8, 16, 25],
       answer: [12.5],
-      complexity: 1,
+      complexity: 5,
       paths:[
         {answer:[12], accuracy:0.8},
         {answer:[12.5], accuracy:1},
@@ -584,7 +584,7 @@ const question6 = new Question({
   ]
 });
 const question7 = new Question({
-  statement: 'Si $1 kilos de manzanas valen $1 cuánto valdrán $3 kilos de manzanas?',
+  statement: 'Si $1 kilos de manzanas valen $2 cuánto valdrán $3 kilos de manzanas?',
   general_topic: 'Numero, algebra y variacion',
   topic: 'Proporcionalidad, numeración, adición y sustracción.',
   description: 'Los números pueden ser decimales o fracciones',
@@ -605,7 +605,7 @@ const question7 = new Question({
     {
       variables: [1, 3.75, 2],
       answer: [7.5],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[8], accuracy:0.7},
         {answer:[7.5], accuracy:1},
@@ -616,7 +616,7 @@ const question7 = new Question({
     {
       variables: [2, 0.5, 3.75],
       answer: [0.937],  //number
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[1], accuracy:0.9},
         {answer:[0.937], accuracy:1},
@@ -627,7 +627,7 @@ const question7 = new Question({
     {
       variables: [1.5, 1.2, 2.8],
       answer: [2.24],  //number
-      complexity: 1,
+      complexity: 4,
       paths:[
         {answer:[2.24], accuracy:1},
         {answer:[2], accuracy:0.7},
@@ -638,7 +638,7 @@ const question7 = new Question({
     {
       variables: [2, 30, 0.75],
       answer: [11.25],
-      complexity: 1,
+      complexity: 5,
       paths:[
         {answer:[11.25], accuracy:1},
         {answer:[10], accuracy:0.4},
@@ -725,7 +725,7 @@ const question9 = new Question({
     {
       variables: [1, 3, 5, 'x + 1'],
       answer: [2, 4, 6],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[1,3,5], accuracy:0.7},
         {answer:[2,4,6], accuracy:1},
@@ -736,7 +736,7 @@ const question9 = new Question({
     {
       variables: [2, 4, 6, 'x'],
       answer: [2, 4, 6],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[2,4,6], accuracy:1},
         {answer:[4,6,2], accuracy:0.8},
@@ -747,7 +747,7 @@ const question9 = new Question({
     {
       variables: [-1, 0, 1, '2*x'],
       answer: [-2, 0, 2],
-      complexity: 2,
+      complexity: 3,
       paths:[
         {answer:[-2,0,2], accuracy:1},
         {answer:[0,2,-2], accuracy:0.6},
@@ -758,7 +758,7 @@ const question9 = new Question({
     {
       variables: [-2, 0, 2, '0.5*x'],
       answer: [-1, 0, 1],
-      complexity: 2,
+      complexity: 3,
       paths:[
         {answer:[-1,0,1], accuracy:1},
         {answer:[0,1,-1], accuracy:0.8},
@@ -769,7 +769,7 @@ const question9 = new Question({
     {
       variables: [10, 100, 1000, 'x-1'],
       answer: [9, 99, 999],
-      complexity: 1,
+      complexity: 3,
       paths:[
         {answer:[9,99,999], accuracy:1},
         {answer:[99,999,9], accuracy:0.9},
@@ -790,7 +790,7 @@ const question10 = new Question({
     {
       variables: [1, 34, 82, 23, 30],
       answer: [34],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[34], accuracy:1},
         {answer:[23], accuracy:0.6},
@@ -812,7 +812,7 @@ const question10 = new Question({
     {
       variables: [10, 11, 12, 13, 14],
       answer: [12],
-      complexity: 1,
+      complexity: 2,
       paths:[
         {answer:[12], accuracy:1},
         {answer:[11], accuracy:0.9},
@@ -868,7 +868,7 @@ const question11 = new Question({
     {
       variables: [7],
       answer: [49],
-      complexity: 3,
+      complexity: 2,
       paths:[
         {answer:[7], accuracy:0.1},
         {answer:[14], accuracy:0.4},
@@ -1983,12 +1983,12 @@ const question28 = new Question({
       ]
     },
     {
-      variables: [0, 0, 0, 0, 0],
-      answer: [0],
+      variables: [1, 1, 1, 1, 1],
+      answer: [1],
       complexity: 1,
       paths:[
-        { answer:[ 0 ], accuracy: 1 },
-        {answer:[ 1 ], accuracy: 0.1 },
+        { answer:[ 1 ], accuracy: 1 },
+        {answer:[ 0 ], accuracy: 0.1 },
         {answer:[ 10 ], accuracy: 0 },
         {answer:[ -5 ], accuracy:0 },
       ]
