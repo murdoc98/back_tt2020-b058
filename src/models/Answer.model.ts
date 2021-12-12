@@ -27,7 +27,7 @@ export default class Answer extends BaseEntity {
   espComplexity?: number;
 
   // TODO Temporal, quitar el default cuando se reinicie la base de datos
-  @Column({ type: 'integer', nullable: false, default: 1 })
+  @Column({ type: 'float', nullable: false, default: 1 })
   @IsNumber()
   accuracy?: number;
 
