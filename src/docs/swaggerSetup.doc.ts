@@ -27,6 +27,10 @@ const options = {
         url: 'http://localhost:1025/api',
         description: 'Development server'
       },
+      {
+        url: 'https://evaio.mx/api',
+        description: 'Production server'
+      },
     ]
   },
   apis: ['./src/docs/*.yml']
